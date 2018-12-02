@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- scan 默认是true 配置文件修改后会刷新 debug 默认是false 是否打印logbak本身的日志 -->
+<configuration scan="true" debug="false">
+    <!-- property指定的参数 下文可以直接引用 -->
+    <property name="LOG_HOME" value="/opt/data/logs/springboot-logging" />
+
+    <!--  appender 负责写日志的组件 class表示具体的appender
+        ConsoleAppender 控制台
+     -->
+    <appender name="stdout"  class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%black(%d{yyyy-MM-dd HH:mm:ss}) %highlight(%-5level) %green([%thread])  %cyan(%logger{10}) - %black(%msg%n)</pattern>
+        </layout>
+        <!--ThresholdFilter 过滤级别 控制台输出info级别已上的 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+    </appender>
+
+    <!-- 日志文件的设置  RollingFileAppender
+     File 指定当天文件输出的文件名称
+     ThresholdFilter 控制日志输出级别 info级别的
+     TimeBasedRollingPolicy 按时间滚动 一天输出一个文件 可以设置保留天数
+     -->
+    <appender name="APP_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <File>${LOG_HOME}/springboot-logging.log</File>
+
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>[%thread]  |-|%level  |-|%d{yyyy-MM-dd'T'HH:mm:ss.SSS+08:00}  |-|%logger{5}[%L]  |-|%msg  |-|%n</pattern>
+        </encoder>
+
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_HOME}/backup/springboot-logging.%d{yyyy-MM-dd}.log</FileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+    <!-- 设置error级别的日志 过滤warn已上的 -->
+    <appender name="APP_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_HOME}/springboot-logging_error.log</File>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>[%thread]  |-|%level  |-|%d{yyyy-MM-dd'T'HH:mm:ss.SSS+08:00}  |-|%logger{5}[%L]  |-|%msg  |-|%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_HOME}/backup/springboot-logging_error.%d{yyyy-MM-dd}.log</FileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+    <root level="DEBUG">
+        <appender-ref ref="stdout" />
+        <appender-ref ref="APP_INFO" />
+        <appender-ref ref="APP_ERROR" />
+    </root>
+
+</configuration>

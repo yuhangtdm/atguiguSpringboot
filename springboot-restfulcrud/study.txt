@@ -1,0 +1,14 @@
+springboot 对静态资源的支持
+1.webjars 以jar包的方式引入静态资源
+/webjars/** 来访问具体的文件
+2. /** 来加载具体包下的资源
+"classpath:/META-INF/resources/",
+ "classpath:/resources/",
+ "classpath:/static/",
+ "classpath:/public/"
+ "/"
+3.欢迎页 已上包下的 index.html均可以用/** 访问到
+
+4.配置图标 静态资源包下的favicon.ico文件即可做网页的图标
+
+thyeamleaf模板引擎 放在tmmpletes下 标签 th:  表达式有五种 ${} *{} #{} @{} ~{}

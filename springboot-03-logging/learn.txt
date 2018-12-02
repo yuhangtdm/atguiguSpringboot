@@ -1,0 +1,8 @@
+springboot 默认使用logbak+slf4j来生成日志
+默认配置了控制台的日志 输出info级别的
+如果修改级别可以用
+logging.level.root=debug 来指定
+logging.file 用于输出日志文件的配置
+logging.path 用于配置日志的输出位置
+已上二者都配置 logging.file生效  logging.path 只可以指定位置 不可以指定文件名称 默认为spring.log
+logging.file只可以指定文件名称 不可以指定路径

@@ -1,0 +1,12 @@
+server:
+  port: 8002
+spring:
+  application:
+    name: producer-ticket
+##注册服务的时候用服务的 ip地址
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
